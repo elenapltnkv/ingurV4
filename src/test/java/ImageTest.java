@@ -55,7 +55,7 @@ public class ImageTest extends BaseTest {
                 .header("Authorization", token)
                 .body(new File("src/test/resources/hhh.jpg"))
                 .when()
-                .post("/image")
+                .post("/")
                 .prettyPeek()
                 .then()
                 .statusCode(404);
