@@ -15,6 +15,9 @@ public abstract class BaseTest {
     static String host;
     static String username;
     static String token;
+    static String title;
+    static String description;
+    static String name;
 
 
     @BeforeAll
@@ -24,10 +27,13 @@ public abstract class BaseTest {
         host = properties.getProperty("host");
         username = properties.getProperty("username", "SansaStark");
         token = properties.getProperty("auth.token");
-        map.put("title", "Red apple");
-        map.put("description", "This is an apple");
-        map.put("name", "This is an apple");
-        RestAssured.basePath = "/upload";
+        title = properties.getProperty("Green apple");
+        name = properties.getProperty("An apple");
+        description = properties.getProperty("This is an apple");
+//        map.put("title", "Red apple");
+//        map.put("description", "This is an apple");
+//        map.put("name", "This is an apple");
+        //RestAssured.basePath = "/upload";
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.baseURI = host;
 
