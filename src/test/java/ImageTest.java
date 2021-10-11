@@ -1,13 +1,20 @@
 import io.restassured.RestAssured;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import io.restassured.matcher.DetailedCookieMatcher;
+import io.restassured.parsing.Parser;
+import io.restassured.response.Response;
+import io.restassured.specification.*;
+import org.hamcrest.Matcher;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -16,37 +23,35 @@ import static org.hamcrest.core.Is.is;
 public class ImageTest extends BaseTest {
     String imageDeleteHash;
 
+
+
     @Order(1)
     @Test
     public void uploadImagesFilePositiveTest() {
         given()
-                .header("Authorization", token)
                 .body(new File("src/test/resources/apple.jpg"))
                 .when()
                 .post("/3/image")
                 .prettyPeek()
-                .then()
-                .statusCode(200);
+                .then();
+
     }
 
     @Order(2)
     @Test
     public void updateImagesFilePositiveTest() {
         given()
-                .header("Authorization", token)
                 .contentType(ContentType.MULTIPART)
                 .multiPart("title", "red apple")
                 .when()
                 .post("/3/image/j3Tj3emBLreTB9A")
                 .prettyPeek()
-                .then()
-                .statusCode(200);
+                .then();
     }
     @Order(3)
     @Test
     public void updateImagesFileNegativeTest () {
         given()
-                .header("Authorization", token)
                 .contentType(ContentType.MULTIPART)
                 .multiPart("image","yyyy")
                 .when()
@@ -59,7 +64,6 @@ public class ImageTest extends BaseTest {
     @Test
     public void favoriteImageTest() {
         given()
-                .header("Authorization", token)
                 .expect()
                 .statusCode(200)
                 .when()
@@ -70,7 +74,6 @@ public class ImageTest extends BaseTest {
     @Test
     public void shareCommunityPositiveTest() {
         given()
-                .header("Authorization", token)
                 .contentType(ContentType.MULTIPART)
                 .multiPart("title", "Get this apple")
                 .when()
@@ -83,7 +86,6 @@ public class ImageTest extends BaseTest {
     @Test
     public void shareCommunityNegativeTest() {
         given()
-                .header("Authorization", token)
                 .contentType(ContentType.MULTIPART)
                 .multiPart("title", "     ")
                 .when()
@@ -96,7 +98,6 @@ public class ImageTest extends BaseTest {
     //@Test
     //public void deleteImageTest(){
     //given()
-    //.header("Authorization", token)
     //.expect()
     //.statusCode(200)
     //.body("data", is(true))
@@ -108,7 +109,6 @@ public class ImageTest extends BaseTest {
     @Test
     public void updateImagesAfterDelPositiveTest() {
         given()
-                .header("Authorization", token)
                 .contentType(ContentType.MULTIPART)
                 .multiPart("title", "red apple")
                 .when()
@@ -123,7 +123,6 @@ public class ImageTest extends BaseTest {
     @Test
     public void favoriteImageAfterDelTest() {
         given()
-                .header("Authorization", token)
                 .expect()
                 .statusCode(404)
                 .when()
