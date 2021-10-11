@@ -12,33 +12,6 @@ public class AccountBase extends BaseTest{
                 .then()
                 .statusCode(200);
     }
-    @Test
-    public void getAccountPositiveTest(){
-        given()
-                .header("Authorization", token)
-                .log()
-                .method()
-                .log()
-                .uri()
-                .when()
-                .get("account/{username}", username)
-                .prettyPeek()
-                .then()
-                .statusCode(200);
-    }
-    @Test
-    public void getAccountInfoBaseTest() {
-        given()
-                .header("Authorization",token)
-                .log()
-                .method()
-                .log()
-                .uri()
-                .when()
-                .get("account/" + username)
-                .prettyPeek()
-                .then()
-                .statusCode(200);
-    }
+
 
 }
